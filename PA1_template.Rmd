@@ -2,17 +2,28 @@
 title: "Reproducible Research: Peer Assessment 1"
 output: 
   html_document:
-    keep_md: false
+    keep_md: true
 ---
 
 
 ## Loading and preprocessing the data
+```{r-prepossing data}
+unzip("activity.zip", overwrite=FALSE)
+data <- read.csv(file="activity.csv",colClasses=c("integer", "Date", "integer"))
+data$month <- as.numeric(format(data$date, "%m"))
 
-
+```
 
 ## What is mean total number of steps taken per day?
 
-
+Here is the table showing total number of steps taken per day
+```{r-number steps per day}
+stepsPerDay <- aggregate(steps ~ date, data = data, sum, na.rm = TRUE)
+stepsPerDay <- data.frame(stepsPerDay)
+library(xtable) 
+dt <- xtable(stepsPerDay)
+print(dt, type = "html")
+```
 
 ## What is the average daily activity pattern?
 

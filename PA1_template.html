@@ -66,10 +66,81 @@ img {
 
 <div id="loading-and-preprocessing-the-data" class="section level2">
 <h2>Loading and preprocessing the data</h2>
-<p>unzip(“activity.zip”, overwrite=FALSE) data &lt;- read.csv(file=“activity.csv”,colClasses=c(“integer”, “Date”, “integer”)) summary(data)</p>
+<pre class="r"><code>unzip(&quot;activity.zip&quot;, overwrite=FALSE)</code></pre>
+<pre><code>## Warning in unzip(&quot;activity.zip&quot;, overwrite = FALSE): not overwriting file
+## './activity.csv</code></pre>
+<pre class="r"><code>data &lt;- read.csv(file=&quot;activity.csv&quot;,colClasses=c(&quot;integer&quot;, &quot;Date&quot;, &quot;integer&quot;))
+data$month &lt;- as.numeric(format(data$date, &quot;%m&quot;))</code></pre>
 </div>
 <div id="what-is-mean-total-number-of-steps-taken-per-day" class="section level2">
 <h2>What is mean total number of steps taken per day?</h2>
+<p>Here is the table showing total number of steps taken per day</p>
+<pre class="r"><code>stepsPerDay &lt;- aggregate(steps ~ date, data = data, sum, na.rm = TRUE)
+stepsPerDay &lt;- data.frame(stepsPerDay)
+library(xtable) </code></pre>
+<pre><code>## Warning: package 'xtable' was built under R version 3.2.2</code></pre>
+<pre class="r"><code>dt &lt;- xtable(stepsPerDay)
+print(dt, type = &quot;html&quot;)</code></pre>
+<pre><code>## Warning in formatC(x = structure(c(15615, 15616, 15617, 15618, 15619,
+## 15620, : class of 'x' was discarded</code></pre>
+<pre><code>## &lt;!-- html table generated in R 3.2.1 by xtable 1.7-4 package --&gt;
+## &lt;!-- Sat Sep 19 08:56:19 2015 --&gt;
+## &lt;table border=1&gt;
+## &lt;tr&gt; &lt;th&gt;  &lt;/th&gt; &lt;th&gt; date &lt;/th&gt; &lt;th&gt; steps &lt;/th&gt;  &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 1 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15615.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 126 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 2 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15616.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 11352 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 3 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15617.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 12116 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 4 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15618.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 13294 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 5 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15619.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15420 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 6 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15620.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 11015 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 7 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15622.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 12811 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 8 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15623.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 9900 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 9 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15624.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10304 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 10 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15625.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 17382 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 11 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15626.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 12426 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 12 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15627.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15098 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 13 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15628.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10139 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 14 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15629.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15084 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 15 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15630.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 13452 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 16 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15631.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10056 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 17 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15632.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 11829 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 18 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15633.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10395 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 19 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15634.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 8821 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 20 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15635.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 13460 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 21 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15636.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 8918 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 22 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15637.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 8355 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 23 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15638.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 2492 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 24 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15639.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 6778 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 25 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15640.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10119 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 26 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15641.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 11458 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 27 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15642.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 5018 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 28 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15643.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 9819 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 29 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15644.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15414 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 30 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15646.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10600 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 31 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15647.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10571 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 32 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15649.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10439 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 33 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15650.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 8334 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 34 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15651.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 12883 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 35 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15652.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 3219 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 36 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15655.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 12608 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 37 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15656.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10765 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 38 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15657.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 7336 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 39 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15659.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt;  41 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 40 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15660.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 5441 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 41 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15661.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 14339 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 42 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15662.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15110 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 43 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15663.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 8841 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 44 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15664.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 4472 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 45 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15665.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 12787 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 46 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15666.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 20427 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 47 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15667.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 21194 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 48 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15668.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 14478 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 49 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15669.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 11834 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 50 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15670.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 11162 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 51 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15671.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 13646 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 52 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15672.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 10183 &lt;/td&gt; &lt;/tr&gt;
+##   &lt;tr&gt; &lt;td align=&quot;right&quot;&gt; 53 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 15673.00 &lt;/td&gt; &lt;td align=&quot;right&quot;&gt; 7047 &lt;/td&gt; &lt;/tr&gt;
+##    &lt;/table&gt;</code></pre>
 </div>
 <div id="what-is-the-average-daily-activity-pattern" class="section level2">
 <h2>What is the average daily activity pattern?</h2>
